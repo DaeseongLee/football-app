@@ -1,4 +1,4 @@
-@value makerBlack, makerWhite from '../../common/colors.css';
+@value makerBlack, makerWhite, makerLightGreen, makerBoldGreen from '../../common/colors.css';
 .login {
         display:flex;
         flex-direction: column;
@@ -6,7 +6,7 @@
         align-items: center;
         height: 25em;
         width: 20em;
-        background: #168e66;
+        background: makerBoldGreen;
         position: relative;
 }
 
@@ -45,7 +45,7 @@
  }
   
 .input[type="submit"] {
-    background: #74ce44;
+    background: makerLightGreen;
     color: makerWhite;
     border: none;
     padding: 1rem;
