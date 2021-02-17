@@ -4,7 +4,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 25em;
+        height: 30em;
         width: 20em;
         background: makerBoldGreen;
         position: relative;
@@ -54,6 +54,7 @@
   
 .input[type="submit"]:hover {
     background: #4c842e;
+    cursor: pointer;
 }
   
 .input[type="submit"]:active {
@@ -74,4 +75,14 @@
 .p {
     color: #aa2323;
     font-size: 0.8em;
+}
+
+.link {
+    color:white;
+    opacity: 0.5;
+    font-size: 0.1rem;
+}
+
+.link:hover {
+    opacity: 1;
 }
