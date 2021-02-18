@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styles from './register.module.css';
 import { useForm } from 'react-hook-form';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Register = ({ authentication }) => {
 
@@ -13,9 +13,15 @@ const Register = ({ authentication }) => {
 
     const onSubmit = (data) => {
         setLoading(true);
-        const getErrorMsg = authentication.register(data);
-        getErrorMsg.then(setErrorMsg);
-        setLoading(false);
+        authentication.register(data).then(
+            errorMsg => {
+                console.log(errorMsg);
+                if (errorMsg) {
+                    setErrorMsg(errorMsg);
+                }
+                setLoading(false);
+            }
+        );
         setTimeout(() => setErrorMsg(''), 5000);
     }
     return (

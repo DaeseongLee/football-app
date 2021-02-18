@@ -72,3 +72,17 @@
     -webkit-appearance: none;
 }
 
+.p {
+    color: #aa2323;
+    font-size: 0.8em;
+}
+
+.link {
+    color:white;
+    opacity: 0.5;
+    font-size: 0.1rem;
+}
+
+.link:hover {
+    opacity: 1;
+}

@@ -1,11 +1,13 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import styles from './list.module.css';
+import MainPannel from './mainPannel/mainPannel';
+import SidePannel from './sidePannel/sidePannel';
 const List = (props) => {
-    const history = useHistory();
-    console.log(history);
     return (
-        <h2>List</h2>
+        <div className={styles.list}>
+            <SidePannel />
+            <MainPannel />
+        </div>
     )
 };
 

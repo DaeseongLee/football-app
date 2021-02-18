@@ -3,12 +3,17 @@ import md5 from 'md5';
 
 class Authentication {
 
-    login() {
-
+    async login(data) {
+        console.log("data", data)
+        try {
+            await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+            return null;
+        } catch (error) {
+            return error.message;
+        }
     }
 
     async register(data) {
-        console.log(data);
         try {
             const createdUser = await firebase.auth().createUserWithEmailAndPassword(data.email, data.password); //인증
             await createdUser.user.updateProfile({
