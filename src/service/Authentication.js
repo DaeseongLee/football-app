@@ -13,6 +13,10 @@ class Authentication {
         }
     }
 
+    logout() {
+        firebase.auth().signOut();
+    }
+
     async register(data) {
         try {
             const createdUser = await firebase.auth().createUserWithEmailAndPassword(data.email, data.password); //인증

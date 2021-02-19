@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './login.module.css';
 import { useForm } from 'react-hook-form';
 
 const Login = ({ authentication }) => {
-    const history = useHistory();
+
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const { register, errors, handleSubmit } = useForm();
@@ -22,20 +22,7 @@ const Login = ({ authentication }) => {
         setTimeout(() => setErrorMsg(''), 5000);
     }
 
-    useEffect(() => {
-        authentication.onAuthChange(user => {
-            console.log("user", user);
-            const { displayName, email, photoURL } = user;
-            if (user) {
-                history.push({
-                    pathname: '/list',
-                    state: { displayName, email, photoURL }
-                })
-            } else {
-                history.push('/');
-            }
-        })
-    }, [])
+
     return (
         <section className={styles.login}>
             <h2 className={styles.title}>Login</h2>

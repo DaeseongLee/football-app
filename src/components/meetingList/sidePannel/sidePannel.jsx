@@ -5,12 +5,10 @@ import { useHistory } from 'react-router-dom';
 import DirectMessage from './directMessage/directMessage';
 import RoomPannel from './roomPannel/roomPannel';
 import UserPannel from './userPannel/userPannel';
-const SidePannel = (props) => {
-    const history = useHistory();
-    console.log("history", history);
+const SidePannel = ({ authentication }) => {
     return (
         <div className={styles.sidePannel}>
-            <UserPannel />
+            <UserPannel authentication={authentication} />
 
             <RoomPannel />
 
