@@ -4,17 +4,37 @@ import { GiBabyfootPlayers } from 'react-icons/gi';
 import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useHistory } from 'react-router-dom';
+import mime from 'mime-types';
 
-
-const UserPannel = ({ authentication }) => {
+const UserPannel = ({ authentication, database, store }) => {
     const history = useHistory();
     const inputRef = useRef();
     const { user } = history.location.state;
-    console.log("user", user);
+    console.log("userPannel", user);
     console.log('history', history);
 
-    const handleUploadFile = () => {
+    const handleUploadFile = async (event) => {
+        const file = event.target.files[0];
+        const metadata = { contentType: mime.lookup(file.name) };
 
+        try {
+            let uploadFile = await store.upload(`user_image/${user.uid}`, file, metadata);
+            console.log('uploadFile', uploadFile);
+            let downLoadURL = await uploadFile.ref.getDownloadURL();
+            console.log('downLoadURL', downLoadURL);
+
+            history.push({
+                pathname: '/list',
+                state: { "user": { ...user, photoURL: downLoadURL } }
+            })
+            console.log("historyState", history.location.state);
+
+            authentication.uploadProfile(user.uid, downLoadURL);
+
+            database.update("users", user.uid, downLoadURL);
+        } catch (error) {
+            alert(error);
+        }
     }
 
     const handleOpenImageRef = () => {
@@ -52,7 +72,11 @@ const UserPannel = ({ authentication }) => {
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
-            <input type='file' className={styles.inputFile} ref={inputRef} onChange={handleUploadFile} ></input>
+            <input type="file"
+                accept="image/jpeg, image/png"
+                className={styles.inputFile}
+                ref={inputRef}
+                onChange={handleUploadFile} ></input>
         </div >
     )
 };

@@ -5,10 +5,10 @@ import { useHistory } from 'react-router-dom';
 import DirectMessage from './directMessage/directMessage';
 import RoomPannel from './roomPannel/roomPannel';
 import UserPannel from './userPannel/userPannel';
-const SidePannel = ({ authentication }) => {
+const SidePannel = ({ authentication, database, store }) => {
     return (
         <div className={styles.sidePannel}>
-            <UserPannel authentication={authentication} />
+            <UserPannel authentication={authentication} database={database} store={store} />
 
             <RoomPannel />
 

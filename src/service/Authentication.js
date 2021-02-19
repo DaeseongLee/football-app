@@ -45,6 +45,12 @@ class Authentication {
         })
     }
 
+    uploadProfile = async (fileUrl) => {
+        await firebase.auth().currentUser.updateProfile({
+            photoURL: fileUrl
+        })
+    }
+
 }
 
 export default Authentication;

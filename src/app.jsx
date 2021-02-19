@@ -6,7 +6,7 @@ import Login from './components/login/login';
 import Register from './components/register/register';
 import List from './components/meetingList/list';
 
-function App({ authentication }) {
+function App({ authentication, database, store }) {
   const history = useHistory();
   useEffect(() => {
     authentication.onAuthChange(user => {
@@ -39,7 +39,7 @@ function App({ authentication }) {
           <Register authentication={authentication} />
         </Route>
         <Route exact path='/list'>
-          <List authentication={authentication} />
+          <List authentication={authentication} database={database} store={store} />
         </Route>
       </Switch>
     </div>
