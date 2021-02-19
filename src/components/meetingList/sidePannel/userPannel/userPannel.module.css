@@ -1,0 +1,27 @@
+@value makerBlack, makerWhite, makerLightGreen, makerBoldGreen from '../../../../common/colors.css';
+
+.userPannel{
+    width: 100%;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    color: makerWhite;
+    margin-bottom: 1em;
+}
+
+.logo {
+    margin-right: 0.5em;
+    color: makerLightGreen;
+    font-size: 1.5em;
+}
+
+.title {
+    font-size: 1.2em;
+}
+
+.userInfo {
+    display: flex;
+    justify-content: center;
+}

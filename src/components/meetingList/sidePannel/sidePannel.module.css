@@ -1,3 +1,11 @@
+@value makerBlack, makerWhite, makerLightGreen, makerBoldGreen from '../../../common/colors.css';
+
 .sidePannel {
     flex: 1;
+    background-color: makerBoldGreen;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
