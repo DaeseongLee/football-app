@@ -46,7 +46,9 @@ class Authentication {
     }
 
     uploadProfile = async (fileUrl) => {
-        await firebase.auth().currentUser.updateProfile({
+        console.log('currentUser', firebase.auth().currentUser);
+        console.log("fileUrl", fileUrl);
+        return await firebase.auth().currentUser.updateProfile({
             photoURL: fileUrl
         })
     }

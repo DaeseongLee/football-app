@@ -24,6 +24,7 @@ function App({ authentication, database, store }) {
           pathname: '/list',
           state: { "user": userInfo }
         })
+
       } else {
         history.push('/');
       }

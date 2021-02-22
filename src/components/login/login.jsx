@@ -9,16 +9,16 @@ const Login = ({ authentication }) => {
     const [errorMsg, setErrorMsg] = useState('');
     const { register, errors, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         setLoading(true);
-        authentication.login(data).then(
-            errorMsg => {
-                if (errorMsg) {
-                    setErrorMsg(errorMsg);
-                }
-                setLoading(false);
-            }
-        );
+        const errorMsg = await authentication.login(data);
+
+        if (errorMsg) {
+            setErrorMsg(errorMsg);
+        }
+        setLoading(false);
+
+
         setTimeout(() => setErrorMsg(''), 5000);
     }
 

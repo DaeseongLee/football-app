@@ -25,6 +25,7 @@
 .userInfo {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .inputFile {
