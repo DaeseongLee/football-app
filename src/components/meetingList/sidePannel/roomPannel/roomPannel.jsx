@@ -22,14 +22,14 @@ const RoomPannel = ({ database }) => {
     const [location, setLocation] = useState("");
     const [number, setNumber] = useState("");
     const [account, setAccount] = useState("");
-    const [roomList, setRoomList] = useState([]);
+    const [roomList, setRoomList] = useState({});
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
 
     useEffect(() => {
         const stopSync = database.syncRoomList(list => {
-            setRoomList([list]);
+            setRoomList(list);
         });
         return () => stopSync;
     }, [])
@@ -80,9 +80,11 @@ const RoomPannel = ({ database }) => {
                 <FaPlus onClick={handleShow} style={{ cursor: 'pointer' }} />
             </div>
             <ul className={styles.roomList}>
-                {roomList && roomList.map(room => (
-                    <Room key={room.id} room={room} onChange={onChange} />
-                ))}
+                {roomList && Object.keys(roomList).reverse().map(key =>
+                (
+                    <Room key={key} room={roomList[key]} onChange={onChange} />
+                ))
+                }
             </ul>
 
             <Modal show={show} onHide={handleClose}>

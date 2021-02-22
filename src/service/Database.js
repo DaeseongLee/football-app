@@ -18,9 +18,10 @@ class Database {
 
     syncRoomList = (onUpdate) => {
         try {
-            firebase.database().ref("rooms").on('child_added', DataSnapshot => {
+            firebase.database().ref("rooms").on('value', DataSnapshot => {
+                const value = DataSnapshot.val();
                 console.log("DataSnapshot", DataSnapshot.val());
-                onUpdate(DataSnapshot.val());
+                value && onUpdate(value);
             })
         } catch (error) {
             alert(error);
