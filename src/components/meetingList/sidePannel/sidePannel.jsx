@@ -10,7 +10,7 @@ const SidePannel = ({ authentication, database, store }) => {
         <div className={styles.sidePannel}>
             <UserPannel authentication={authentication} database={database} store={store} />
 
-            <RoomPannel />
+            <RoomPannel database={database} />
 
             <DirectMessage />
         </div>

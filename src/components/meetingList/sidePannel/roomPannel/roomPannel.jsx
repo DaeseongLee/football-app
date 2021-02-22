@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './roomPannel.module.css';
+import { useHistory } from 'react-router-dom';
+
 import { IoIosCreate } from 'react-icons/io';
 import { FaPlus } from 'react-icons/fa';
 import Modal from 'react-bootstrap/Modal';
@@ -8,11 +10,14 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 
-const RoomPannel = (props) => {
+
+const RoomPannel = ({ database }) => {
+    const user = useHistory().location.state.user;
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
     const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
+    const [sTime, setStime] = useState("");
+    const [eTime, setEtime] = useState("");
     const [location, setLocation] = useState("");
     const [number, setNumber] = useState("");
     const [account, setAccount] = useState("");
@@ -20,16 +25,40 @@ const RoomPannel = (props) => {
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
 
+    console.log('user', user);
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        console.log("form", form);
+        console.log('date123', date);
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         }
-
         setValidated(true);
+
+        addRoom();
     };
+    const addRoom = () => {
+        const roomInfo = {
+            date,
+            sTime,
+            eTime,
+            location,
+            number,
+            account,
+            createdBy: {
+                name: user.displayName,
+                img: user.photoURL
+            }
+        }
+        database.createRoom(roomInfo);
+        setShow(false);
+        setDate("");
+        setStime("");
+        setEtime("");
+        setLocation("");
+        setNumber("");
+        setAccount("");
+    }
     return (
         <div className={styles.roomPannel}>
             <IoIosCreate style={{ marginRight: '0.5em' }} />
@@ -51,6 +80,7 @@ const RoomPannel = (props) => {
                                         placeholder="Username"
                                         aria-describedby="inputGroupPrepend"
                                         required
+                                        onChange={e => setDate(e.target.value)}
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Please enter a date
@@ -62,37 +92,57 @@ const RoomPannel = (props) => {
                         <Form.Row>
                             <Form.Group as={Col} md="5" controlId="validationCustom03">
                                 <Form.Label>Start Time</Form.Label>
-                                <Form.Control type="time" placeholder="Time" required />
+                                <Form.Control
+                                    type="time"
+                                    placeholder="Time"
+                                    required
+                                    onChange={e => setStime(e.target.value)} />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a Start Time
                               </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="5" controlId="validationCustom03">
                                 <Form.Label>End Time</Form.Label>
-                                <Form.Control type="time" placeholder="Time" required />
+                                <Form.Control
+                                    type="time"
+                                    placeholder="Time"
+                                    required
+                                    onChange={e => setEtime(e.target.value)} />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a End Time
                               </Form.Control.Feedback>
                             </Form.Group>
                         </Form.Row>
                         <Form.Row>
-                            <Form.Group as={Col} md="5" controlId="validationCustom04">
+                            <Form.Group as={Col} md="4" controlId="validationCustom04">
                                 <Form.Label>Location</Form.Label>
-                                <Form.Control type="text" placeholder="Location" required />
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Location"
+                                    required
+                                    onChange={e => setLocation(e.target.value)} />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a Location
                               </Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="2" controlId="validationCustom05">
+                            <Form.Group as={Col} md="4" controlId="validationCustom05">
                                 <Form.Label>Number</Form.Label>
-                                <Form.Control type="text" placeholder="Number" required />
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Number"
+                                    required
+                                    onChange={e => setNumber(e.target.value)} />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a Number
                             </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="4" controlId="validationCustom05">
                                 <Form.Label>Account</Form.Label>
-                                <Form.Control type="text" placeholder="Account" required />
+                                <Form.Control
+                                    type="account"
+                                    placeholder="Account"
+                                    required
+                                    onChange={e => setAccount(e.target.value)} />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a Account
                             </Form.Control.Feedback>
