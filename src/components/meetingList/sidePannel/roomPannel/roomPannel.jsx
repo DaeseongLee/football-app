@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './roomPannel.module.css';
 import { useHistory } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
+import Room from './room';
 
 
 const RoomPannel = ({ database }) => {
@@ -21,14 +22,20 @@ const RoomPannel = ({ database }) => {
     const [location, setLocation] = useState("");
     const [number, setNumber] = useState("");
     const [account, setAccount] = useState("");
+    const [roomList, setRoomList] = useState([]);
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
 
-    console.log('user', user);
+    useEffect(() => {
+        const stopSync = database.syncRoomList(list => {
+            setRoomList([list]);
+        });
+        return () => stopSync;
+    }, [])
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        console.log('date123', date);
+
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
@@ -51,6 +58,7 @@ const RoomPannel = ({ database }) => {
             }
         }
         database.createRoom(roomInfo);
+
         setShow(false);
         setDate("");
         setStime("");
@@ -59,11 +67,23 @@ const RoomPannel = ({ database }) => {
         setNumber("");
         setAccount("");
     }
+
+    const onChange = () => {
+        console.log("onChange");
+    }
+
     return (
         <div className={styles.roomPannel}>
-            <IoIosCreate style={{ marginRight: '0.5em' }} />
-            <span>MAKE ROOM {" "}</span>
-            <FaPlus onClick={handleShow} style={{ cursor: 'pointer' }} />
+            <div className={styles.logo}>
+                <IoIosCreate style={{ marginRight: '0.5em' }} />
+                <span>MAKE ROOM {" "}</span>
+                <FaPlus onClick={handleShow} style={{ cursor: 'pointer' }} />
+            </div>
+            <ul className={styles.roomList}>
+                {roomList && roomList.map(room => (
+                    <Room key={room.id} room={room} onChange={onChange} />
+                ))}
+            </ul>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -160,6 +180,7 @@ const RoomPannel = ({ database }) => {
                         </Button>
                 </Modal.Footer>
             </Modal>
+
         </div>
     )
 };

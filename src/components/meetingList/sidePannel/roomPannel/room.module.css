@@ -1,0 +1,13 @@
+@value makerBlack, makerWhite, makerLightGreen, makerBoldGreen from '../../../../common/colors.css';
+
+.room{
+    cursor: pointer;
+    color: makerWhite;
+    transition: transform 100ms ease-in;
+
+}
+
+.room:hover {
+    transform: scale(1.1);
+    color:makerLightGreen;
+}

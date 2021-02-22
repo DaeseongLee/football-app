@@ -7,12 +7,25 @@ class Database {
 
     createRoom = async (roomInfo) => {
         const key = firebase.database().ref("rooms").push().key;
-        console.log('key', key);
+        roomInfo["id"] = key;
+
         try {
             firebase.database().ref("rooms").child(key).update(roomInfo);
         } catch (error) {
             alert(error);
         }
+    }
+
+    syncRoomList = (onUpdate) => {
+        try {
+            firebase.database().ref("rooms").on('child_added', DataSnapshot => {
+                console.log("DataSnapshot", DataSnapshot.val());
+                onUpdate(DataSnapshot.val());
+            })
+        } catch (error) {
+            alert(error);
+        }
+        return () => firebase.database().ref("rooms").off();
     }
 }
 
