@@ -23,14 +23,10 @@ const UserPannel = ({ authentication, database, store }) => {
             setLoading(true);
             //store에 저장
             let uploadFile = await store.upload(`user_image/${user.uid}`, file, metadata);
-            console.log('uploadFile', uploadFile);
             let downLoadURL = await uploadFile.ref.getDownloadURL();
-            console.log('downLoadURL', downLoadURL);
 
-            console.log("historyState", history.location.state);
             //auth fileUrl 업데이트
             let updateUser = await authentication.uploadProfile(downLoadURL);
-            console.log('updateUser', updateUser);
 
             //database fileUrl 업데이트
             database.update("users", user.uid, downLoadURL);

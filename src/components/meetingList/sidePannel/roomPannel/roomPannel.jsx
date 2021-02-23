@@ -13,7 +13,8 @@ import Room from './room';
 
 
 const RoomPannel = ({ database }) => {
-    const user = useHistory().location.state.user;
+    const history = useHistory();
+    const user = history.location.state.user;
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
     const [date, setDate] = useState("");
@@ -23,6 +24,8 @@ const RoomPannel = ({ database }) => {
     const [number, setNumber] = useState("");
     const [account, setAccount] = useState("");
     const [roomList, setRoomList] = useState({});
+    const [currentRoom, setCurrentRoom] = useState({});
+    const [activeChatroomId, setActiveChatroomId] = useState({});
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
@@ -31,8 +34,17 @@ const RoomPannel = ({ database }) => {
         const stopSync = database.syncRoomList(list => {
             setRoomList(list);
         });
+
         return () => stopSync;
     }, [])
+
+    useEffect(() => {
+        const first = Object.keys(roomList).reverse()[0];
+        setCurrentRoom(roomList[first]);
+        setActiveChatroomId(first);
+        setHistory(roomList[first]);
+    }, [roomList])
+
     const handleSubmit = (event) => {
         const form = event.currentTarget;
 
@@ -68,21 +80,34 @@ const RoomPannel = ({ database }) => {
         setAccount("");
     }
 
-    const onChange = () => {
-        console.log("onChange");
+    const onChange = (room) => {
+        setCurrentRoom(room);
+        setActiveChatroomId(room.id);
+        setHistory(room);
+    }
+    const setHistory = (room) => {
+        history.push({
+            state: {
+                "user": user,
+                "currentRoom": room
+            }
+        })
     }
 
     return (
         <div className={styles.roomPannel}>
             <div className={styles.logo}>
                 <IoIosCreate style={{ marginRight: '0.5em' }} />
-                <span>MAKE ROOM {" "}</span>
-                <FaPlus onClick={handleShow} style={{ cursor: 'pointer' }} />
+                <span className={styles.title}>MAKE ROOM {" "}</span>
+                <FaPlus onClick={handleShow} style={{ cursor: 'pointer', marginLeft: '0.5em', color: 'white', fontSize: '0.8em' }} />
+                <span className={styles.cnt}>
+                    {roomList && Object.keys(roomList).length}
+                </span>
             </div>
             <ul className={styles.roomList}>
                 {roomList && Object.keys(roomList).reverse().map(key =>
                 (
-                    <Room key={key} room={roomList[key]} onChange={onChange} />
+                    <Room key={key} room={roomList[key]} onChange={onChange} activeChatroomId={activeChatroomId} />
                 ))
                 }
             </ul>

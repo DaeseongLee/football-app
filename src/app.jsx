@@ -10,7 +10,6 @@ function App({ authentication, database, store }) {
   const history = useHistory();
   useEffect(() => {
     authentication.onAuthChange(user => {
-      console.log("userApp", user);
       if (user) {
         const { displayName, email, photoURL, uid } = user;
         const userInfo = {};

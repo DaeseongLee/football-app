@@ -1,3 +1,5 @@
+@value makerBlack, makerWhite, makerLightGreen, makerBoldGreen from '../../../../common/colors.css';
+
 .roomPannel {
     display: flex;
     flex-direction: column;
@@ -18,4 +20,15 @@
     margin-top: 0.5rem;
     padding: 0;
     list-style: none; 
+}
+
+.title {
+    color: makerWhite;
+    font-size: 0.8em;
+}
+
+.cnt {
+    color: makerLightGreen;
+    margin-left: 0.5em;
+    font-size: 0.3em;
 }
