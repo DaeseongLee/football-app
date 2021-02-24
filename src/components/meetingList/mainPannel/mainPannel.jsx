@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import MainHeader from './mainHeader/mainHeader';
 import styles from './mainPannel.module.css';
-const MainPannel = (props) => {
+const MainPannel = ({ current }) => {
+
     return (
         <div className={styles.mainPannel}>
-            MainPannel
+            <MainHeader current={current} />
         </div>
     )
 };

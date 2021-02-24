@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col';
 import Room from './room';
 
 
-const RoomPannel = ({ database }) => {
+const RoomPannel = ({ database, handleCurrentRoom }) => {
     const history = useHistory();
     const user = history.location.state.user;
     const [validated, setValidated] = useState(false);
@@ -31,6 +31,7 @@ const RoomPannel = ({ database }) => {
     const handleClose = () => setShow(false);
 
     useEffect(() => {
+        console.log("여기");
         const stopSync = database.syncRoomList(list => {
             setRoomList(list);
         });
@@ -41,6 +42,7 @@ const RoomPannel = ({ database }) => {
     useEffect(() => {
         const first = Object.keys(roomList).reverse()[0];
         setCurrentRoom(roomList[first]);
+        handleCurrentRoom(roomList[first]);
         setActiveChatroomId(first);
         setHistory(roomList[first]);
     }, [roomList])
@@ -82,6 +84,7 @@ const RoomPannel = ({ database }) => {
 
     const onChange = (room) => {
         setCurrentRoom(room);
+        handleCurrentRoom(room);
         setActiveChatroomId(room.id);
         setHistory(room);
     }
@@ -97,7 +100,7 @@ const RoomPannel = ({ database }) => {
     return (
         <div className={styles.roomPannel}>
             <div className={styles.logo}>
-                <IoIosCreate style={{ marginRight: '0.5em' }} />
+                <IoIosCreate style={{ marginRight: '1.2rem' }} />
                 <span className={styles.title}>MAKE ROOM {" "}</span>
                 <FaPlus onClick={handleShow} style={{ cursor: 'pointer', marginLeft: '0.5em', color: 'white', fontSize: '0.8em' }} />
                 <span className={styles.cnt}>
