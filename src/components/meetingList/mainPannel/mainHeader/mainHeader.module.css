@@ -1,17 +1,43 @@
 
+@value makerBlack, makerWhite, makerLightGreen, makerBoldGreen from '../../../../common/colors.css';
 .mainHeader {
     text-align: center;
-    width: 80%;
+    width: 60%;
     margin: auto;
-    margin-top: 2rem;
-    background-color: #53b25d;
+    margin-top: 4rem;
+    border: 1px solid black;
+    background-color: makerWhite;
 
 }
 
-tr {
-    height: 1em;
+.firstLine,
+.secondLine {
+    display: flex;    
+    justify-content: space-around;
 }
-th {
-    width: 1em;
-    height: 1em;
+
+
+.title {
+    color:makerBoldGreen;
+    font-size: 1rem;
 }
+
+
+
+.result{
+    color: makerBlack;
+    font-size: 1rem;
+
+}
+
+@media screen and (max-width: 45em) {
+    .firstLine,
+    .secondLine {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .title {
+        margin-left: 1rem;
+    }
+  }
+  

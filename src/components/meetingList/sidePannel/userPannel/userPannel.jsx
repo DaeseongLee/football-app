@@ -4,16 +4,11 @@ import { GiBabyfootPlayers } from 'react-icons/gi';
 import { FaUser } from 'react-icons/fa';
 import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { useHistory } from 'react-router-dom';
 import mime from 'mime-types';
 
-const UserPannel = ({ authentication, database, store }) => {
-    const history = useHistory();
+const UserPannel = ({ authentication, database, store, user, handleUser }) => {
     const inputRef = useRef();
-    const [user, setUser] = useState(history.location.state.user);
     const [loading, setLoading] = useState(false);
-    console.log("userPannel", user);
-    console.log('history', history);
 
     const handleUploadFile = async (event) => {
         const file = event.target.files[0];
@@ -36,11 +31,7 @@ const UserPannel = ({ authentication, database, store }) => {
         } catch (error) {
             alert(error);
         } finally {
-            setUser(newState);
-            history.push({
-                pathname: '/list',
-                state: { "user": newState }
-            })
+            handleUser(newState);
         }
     }
 

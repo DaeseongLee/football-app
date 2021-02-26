@@ -1,18 +1,13 @@
 import React from 'react';
 import styles from './sidePannel.module.css';
-
-import { useHistory } from 'react-router-dom';
-import DirectMessage from './directMessage/directMessage';
 import RoomPannel from './roomPannel/roomPannel';
 import UserPannel from './userPannel/userPannel';
-const SidePannel = ({ authentication, database, store, handleCurrentRoom }) => {
+const SidePannel = ({ authentication, database, store, user, handleUser, handleCurrentRoom }) => {
     return (
         <div className={styles.sidePannel}>
-            <UserPannel authentication={authentication} database={database} store={store} />
+            <UserPannel authentication={authentication} database={database} store={store} user={user} handleUser={handleUser} />
 
-            <RoomPannel database={database} handleCurrentRoom={handleCurrentRoom} />
-
-            <DirectMessage />
+            <RoomPannel database={database} user={user} handleCurrentRoom={handleCurrentRoom} />
         </div>
     )
 };

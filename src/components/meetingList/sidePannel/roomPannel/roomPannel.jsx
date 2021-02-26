@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from './roomPannel.module.css';
-import { useHistory } from 'react-router-dom';
 
 import { IoIosCreate } from 'react-icons/io';
 import { FaPlus } from 'react-icons/fa';
@@ -12,9 +11,7 @@ import Col from 'react-bootstrap/Col';
 import Room from './room';
 
 
-const RoomPannel = ({ database, handleCurrentRoom }) => {
-    const history = useHistory();
-    const user = history.location.state.user;
+const RoomPannel = ({ database, user, handleCurrentRoom }) => {
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
     const [date, setDate] = useState("");
@@ -24,14 +21,12 @@ const RoomPannel = ({ database, handleCurrentRoom }) => {
     const [number, setNumber] = useState("");
     const [account, setAccount] = useState("");
     const [roomList, setRoomList] = useState({});
-    const [currentRoom, setCurrentRoom] = useState({});
     const [activeChatroomId, setActiveChatroomId] = useState({});
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
 
     useEffect(() => {
-        console.log("여기");
         const stopSync = database.syncRoomList(list => {
             setRoomList(list);
         });
@@ -41,10 +36,8 @@ const RoomPannel = ({ database, handleCurrentRoom }) => {
 
     useEffect(() => {
         const first = Object.keys(roomList).reverse()[0];
-        setCurrentRoom(roomList[first]);
         handleCurrentRoom(roomList[first]);
         setActiveChatroomId(first);
-        setHistory(roomList[first]);
     }, [roomList])
 
     const handleSubmit = (event) => {
@@ -83,18 +76,8 @@ const RoomPannel = ({ database, handleCurrentRoom }) => {
     }
 
     const onChange = (room) => {
-        setCurrentRoom(room);
         handleCurrentRoom(room);
         setActiveChatroomId(room.id);
-        setHistory(room);
-    }
-    const setHistory = (room) => {
-        history.push({
-            state: {
-                "user": user,
-                "currentRoom": room
-            }
-        })
     }
 
     return (
@@ -181,7 +164,8 @@ const RoomPannel = ({ database, handleCurrentRoom }) => {
                                     type="number"
                                     placeholder="Number"
                                     required
-                                    onChange={e => setNumber(e.target.value)} />
+                                    onChange={e => setNumber(e.target.value)}
+                                    max='16' />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a Number
                             </Form.Control.Feedback>

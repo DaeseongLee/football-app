@@ -1,0 +1,28 @@
+@value makerBlack, makerWhite, makerLightGreen, makerBoldGreen from '../../../../common/colors.css';
+
+.participant {
+    width: 50%;
+    text-align: center;
+    border: 1px solid makerLightGreen;
+}
+
+.participant.full {
+    background-color: makerBoldGreen;
+}
+
+.participant.empty {
+    background-color: transparent;
+}
+
+.plus {
+    color: white;
+    font-size: 1rem;
+}
+
+.plus.dup {
+    opacity: 0.1;
+}
+
+.plus:hover {
+    background-color: makerLightGreen;
+}
